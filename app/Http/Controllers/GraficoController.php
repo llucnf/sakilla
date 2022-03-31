@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Nette\Utils\DateTime;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 class GraficoController extends Controller
 {
     /**
@@ -70,7 +74,18 @@ class GraficoController extends Controller
            array_push($array_titulos,$request->title);
            array_push($array_alquileres,$request->alquileres);
         }
-        $titulo="Peliculas top 10 alquiladas entre ".$mes_inicio." y ". $mes_final;
+
+            
+            
+            $fecha_inicio = DateTime::createFromFormat('!m', $mes_inicio);
+            $mesInicio = strftime("%B", $fecha_inicio->getTimestamp()); 
+
+
+            $fecha_final = DateTime::createFromFormat('!m', $mes_final);
+            $mesFinal = strftime("%B", $fecha_final->getTimestamp());
+            
+
+        $titulo="Peliculas top 10 alquiladas entre ".$mesInicio." y ". $mesFinal;
         //dd($array_alquileres);
         //dd($array_titulos);
         return view('grafico.new')->with('array_titulos',$array_titulos)->with('array_alquileres',$array_alquileres)->with('titulo',$titulo);
