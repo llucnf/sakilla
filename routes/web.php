@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\FilmController;
-
+use App\Http\Controllers\GraficoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,3 +27,5 @@ require __DIR__.'/auth.php';
 
 Route::resource('actor',ActorController::class)->middleware(['auth']);
 Route::resource('film',FilmController::class)->middleware(['auth']);
+Route::resource('grafico',GraficoController::class)->middleware(['auth']);
+

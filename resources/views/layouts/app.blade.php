@@ -16,8 +16,12 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
+        
     </head>
     <body class="font-sans antialiased">
+        <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+        <script src="https://unpkg.com/flowbite@1.4.1/dist/datepicker.js"></script>
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 

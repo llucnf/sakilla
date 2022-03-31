@@ -1,14 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Actor;
-use App\Models\Film;
-use App\Models\FilmActor;
-use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
-
-
-class ActorController extends Controller
+use Illuminate\Support\Facades\DB;
+class GraficoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,19 +13,7 @@ class ActorController extends Controller
      */
     public function index()
     {
-    //     $allActors=Actor::all();
-    //     foreach ($allActors as $actor) {
-    //         $films=$actor->films()->get();
-    //     }
-        
-    //      dd($films);
-    //    $arr_films=Film::find();
-       
-    //     dd($allActors);
-    //     return view('actor.index')->with('actor',$allActors)
-    //     ->with('films',$films);
-
-    $consulta2=DB::select("select count(rental_date) as num from rental where month(rental_date)= 7 and year(rental_date)=2005 group by month(rental_date)");
+        $consulta2=DB::select("select count(rental_date) as num from rental where month(rental_date)= 7 and year(rental_date)=2005 group by month(rental_date)");
     //si esta vacio imprime true
    // dd(empty($consulta2));
     $array_meses=[];
@@ -49,8 +33,7 @@ class ActorController extends Controller
  
      //dd($array_meses) ;  
 
-    return view('actor.index')->with('array_meses',$array_meses);
-
+    return view('grafico.index')->with('array_meses',$array_meses);
     }
 
     /**
@@ -60,7 +43,7 @@ class ActorController extends Controller
      */
     public function create()
     {
-        //
+       return view('grafico.create');
     }
 
     /**
@@ -71,7 +54,26 @@ class ActorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $mes_inicio = request()->mes_inicio;
+        $mes_final= request()->mes_final;
+        //dd($request->all());
+        $consulta=DB::select("select film.film_id,film.title, count(rental.return_date) as alquileres 
+        from film 
+        inner join inventory 
+        on film.film_id= inventory.film_id 
+        inner join rental 
+        on inventory.inventory_id = rental.inventory_id 
+        where month(rental.rental_date) between ".$mes_inicio."  and ".$mes_final."   group by film.film_id having alquileres>1 order by alquileres desc limit 10");
+        $array_alquileres=[];
+        $array_titulos=[];
+        foreach ($consulta as $request ) {
+           array_push($array_titulos,$request->title);
+           array_push($array_alquileres,$request->alquileres);
+        }
+        $titulo="Peliculas top 10 alquiladas entre ".$mes_inicio." y ". $mes_final;
+        //dd($array_alquileres);
+        //dd($array_titulos);
+        return view('grafico.new')->with('array_titulos',$array_titulos)->with('array_alquileres',$array_alquileres)->with('titulo',$titulo);
     }
 
     /**
