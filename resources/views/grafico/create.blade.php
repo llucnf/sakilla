@@ -5,11 +5,11 @@
 <form action="{{url('/grafico')}}" method="post" enctype="multipart/form-data" id="registro">
     @csrf
     <h3 class="text-green-600 text-lg ">Peliculas mas vendidas entre dos fechas</h3>
-    <div class="grid grid-cols-2 gap-4">
-        <div class="mb-3 col-6">
-            <label for="inicio" class="form-label amarillo">Mes de inicio</label>
+    <div class="grid grid-cols-2 gap-4 ">
+        <div class="mb-3 col-6 ">
+            <label for="inicio" class="form-label amarillo ">Mes de inicio</label>
 
-            <select name="mes_inicio">
+            <select class="menu rounded" name="mes_inicio">
                 <option value="1">ENERO</option>
                 <option value="2">FEBRERO</option>
                 <option value="3">MARZO</option>
@@ -29,7 +29,7 @@
         <div class="mb-3 col-6">
             <label for="final" class="form-label amarillo">Mes final</label>
 
-            <select name="mes_final">
+            <select class="rounded"  name="mes_final">
 
                 <option value="1">ENERO</option>
                 <option value="2">FEBRERO</option>
@@ -60,7 +60,7 @@
 </form>
 
 @endsection
-<div>
 
-    @yield('grafico')
-</div>
+
+   
+
